@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(44, 25%, 97%);
+  --foreground: hsl(15, 25%, 10%);
+  --card: hsl(44, 25%, 97%);
+  --card-foreground: hsl(15, 25%, 10%);
+  --popover: hsl(44, 25%, 97%);
+  --popover-foreground: hsl(15, 25%, 10%);
+  --primary: hsl(20, 67%, 28%);
+  --primary-foreground: hsl(44, 25%, 97%);
+  --secondary: hsl(38, 48%, 65%);
+  --secondary-foreground: hsl(15, 25%, 10%);
+  --muted: hsl(40, 30%, 88%);
+  --muted-foreground: hsl(15, 25%, 10%);
+  --accent: hsl(40, 30%, 88%);
+  --accent-foreground: hsl(20, 67%, 28%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(44, 25%, 97%);
+  --border: hsl(38, 48%, 85%);
+  --input: hsl(40, 30%, 95%);
+  --ring: hsl(20, 67%, 28%);
+  --chart-1: hsl(20, 67%, 28%);
+  --chart-2: hsl(159, 100%, 36%);
+  --chart-3: hsl(42, 93%, 56%);
+  --chart-4: hsl(147, 79%, 42%);
+  --chart-5: hsl(341, 75%, 51%);
+  --sidebar: hsl(44, 25%, 97%);
+  --sidebar-foreground: hsl(15, 25%, 10%);
+  --sidebar-primary: hsl(20, 67%, 28%);
+  --sidebar-primary-foreground: hsl(44, 25%, 97%);
+  --sidebar-accent: hsl(40, 30%, 88%);
+  --sidebar-accent-foreground: hsl(20, 67%, 28%);
+  --sidebar-border: hsl(38, 48%, 85%);
+  --sidebar-ring: hsl(20, 67%, 28%);
+  --font-playfair: 'Playfair Display', serif;
+  --font-inter: 'Inter', sans-serif;
+  --warm-brown: hsl(20, 67%, 28%);
+  --gold: hsl(38, 48%, 65%);
+  --dark-brown: hsl(15, 25%, 10%);
+  --cream: hsl(44, 25%, 97%);
+  --peru: hsl(30, 59%, 53%);
+  --moccasin: hsl(39, 100%, 85%);
+  --radius: 1.3rem;
+}
+
+.dark {
+  --background: hsl(15, 25%, 10%);
+  --foreground: hsl(44, 25%, 97%);
+  --card: hsl(15, 25%, 12%);
+  --card-foreground: hsl(44, 25%, 97%);
+  --popover: hsl(15, 25%, 10%);
+  --popover-foreground: hsl(44, 25%, 97%);
+  --primary: hsl(38, 48%, 65%);
+  --primary-foreground: hsl(15, 25%, 10%);
+  --secondary: hsl(20, 67%, 28%);
+  --secondary-foreground: hsl(44, 25%, 97%);
+  --muted: hsl(15, 25%, 15%);
+  --muted-foreground: hsl(44, 25%, 85%);
+  --accent: hsl(15, 25%, 15%);
+  --accent-foreground: hsl(38, 48%, 65%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(44, 25%, 97%);
+  --border: hsl(15, 25%, 18%);
+  --input: hsl(15, 25%, 18%);
+  --ring: hsl(38, 48%, 65%);
+  --sidebar: hsl(15, 25%, 12%);
+  --sidebar-foreground: hsl(44, 25%, 97%);
+  --sidebar-primary: hsl(38, 48%, 65%);
+  --sidebar-primary-foreground: hsl(15, 25%, 10%);
+  --sidebar-accent: hsl(15, 25%, 15%);
+  --sidebar-accent-foreground: hsl(38, 48%, 65%);
+  --sidebar-border: hsl(15, 25%, 18%);
+  --sidebar-ring: hsl(38, 48%, 65%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-inter antialiased bg-background text-foreground;
+  }
+
+  .font-playfair {
+    font-family: var(--font-playfair);
+  }
+
+  .font-inter {
+    font-family: var(--font-inter);
+  }
+
+  .text-warm-brown {
+    color: var(--warm-brown);
+  }
+
+  .text-gold {
+    color: var(--gold);
+  }
+
+  .text-dark-brown {
+    color: var(--dark-brown);
+  }
+
+  .text-cream {
+    color: var(--cream);
+  }
+
+  .bg-warm-brown {
+    background-color: var(--warm-brown);
+  }
+
+  .bg-gold {
+    background-color: var(--gold);
+  }
+
+  .bg-dark-brown {
+    background-color: var(--dark-brown);
+  }
+
+  .bg-cream {
+    background-color: var(--cream);
+  }
+
+  .bg-moccasin {
+    background-color: var(--moccasin);
+  }
+
+  .border-gold {
+    border-color: var(--gold);
+  }
+
+  .border-warm-brown {
+    border-color: var(--warm-brown);
+  }
+
+  .hover\:bg-warm-brown:hover {
+    background-color: var(--warm-brown);
+  }
+
+  .hover\:text-warm-brown:hover {
+    color: var(--warm-brown);
+  }
+
+  .hover\:text-gold:hover {
+    color: var(--gold);
+  }
+
+  .focus\:border-warm-brown:focus {
+    border-color: var(--warm-brown);
+  }
+
+  .focus\:ring-warm-brown:focus {
+    --tw-ring-color: var(--warm-brown);
+  }
+}
