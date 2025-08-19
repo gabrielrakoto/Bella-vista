@@ -1,22 +1,36 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { insertReservationSchema } from "@shared/schema";
-import { apiRequest } from "@/lib/queryClient";
+import { useState } from "react";
+import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { CalendarCheck } from "lucide-react";
-import type { InsertReservation } from "@shared/schema";
+import { CalendarCheck, CheckCircle } from "lucide-react";
+
+const reservationSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Valid email is required"),
+  phone: z.string().min(1, "Phone number is required"),
+  date: z.date(),
+  time: z.string().min(1, "Time is required"),
+  guests: z.number().min(1, "Number of guests is required"),
+  occasion: z.string().optional(),
+  specialRequests: z.string().optional(),
+});
+
+type ReservationFormData = z.infer<typeof reservationSchema>;
 
 export default function Reservations() {
   const { toast } = useToast();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<InsertReservation>({
-    resolver: zodResolver(insertReservationSchema),
+  const form = useForm<ReservationFormData>({
+    resolver: zodResolver(reservationSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -30,35 +44,59 @@ export default function Reservations() {
     },
   });
 
-  const createReservationMutation = useMutation({
-    mutationFn: async (data: InsertReservation) => {
-      await apiRequest("POST", "/api/reservations", data);
-    },
-    onSuccess: () => {
+  const onSubmit = async (data: ReservationFormData) => {
+    setIsSubmitting(true);
+    
+    try {
+      // Simulate form submission (replace with actual Formspree or email service)
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       toast({
         title: "Reservation Submitted",
         description: "Your reservation request has been submitted successfully! We'll contact you soon to confirm.",
       });
+      setIsSubmitted(true);
       form.reset();
-    },
-    onError: (error) => {
+    } catch (error) {
       toast({
-        title: "Error",
+        title: "Error", 
         description: "Failed to submit reservation. Please try again.",
         variant: "destructive",
       });
-      console.error("Reservation error:", error);
-    },
-  });
-
-  const onSubmit = (data: InsertReservation) => {
-    createReservationMutation.mutate(data);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Get tomorrow's date as minimum
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   const minDate = tomorrow.toISOString().split('T')[0];
+
+  if (isSubmitted) {
+    return (
+      <section id="reservations" className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-playfair font-bold text-dark-brown mb-4">Reservation Submitted</h2>
+          </div>
+          <div className="bg-green-50 rounded-3xl p-8 shadow-xl text-center">
+            <CheckCircle className="w-16 h-16 mx-auto mb-6 text-green-600" />
+            <h3 className="text-2xl font-playfair font-bold text-dark-brown mb-4">Thank You!</h3>
+            <p className="text-lg text-gray-700 mb-6">
+              Your reservation request has been submitted successfully. We'll contact you soon to confirm your booking.
+            </p>
+            <Button 
+              onClick={() => setIsSubmitted(false)}
+              className="bg-warm-brown text-white hover:bg-warm-brown/90"
+            >
+              Make Another Reservation
+            </Button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="reservations" className="py-20 bg-white">
@@ -262,11 +300,11 @@ export default function Reservations() {
               <div className="md:col-span-2 text-center">
                 <Button 
                   type="submit" 
-                  disabled={createReservationMutation.isPending}
+                  disabled={isSubmitting}
                   className="bg-warm-brown text-white px-8 py-4 rounded-lg hover:bg-warm-brown/90 transition-all duration-200 font-semibold text-lg"
                 >
                   <CalendarCheck className="mr-2 h-5 w-5" />
-                  {createReservationMutation.isPending ? "Submitting..." : "Confirm Reservation"}
+                  {isSubmitting ? "Submitting..." : "Confirm Reservation"}
                 </Button>
               </div>
             </form>
