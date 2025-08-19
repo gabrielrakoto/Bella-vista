@@ -13,9 +13,6 @@ export default function About() {
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
               With breathtaking views and an atmosphere of refined elegance, we invite you to discover a culinary journey that will create memories to last a lifetime.
             </p>
-            <Button className="bg-gold text-dark-brown px-6 py-3 rounded-lg hover:bg-gold/90 transition-all duration-200 font-semibold">
-              Learn More
-            </Button>
           </div>
           <div className="relative">
             <img 

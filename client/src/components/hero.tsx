@@ -29,7 +29,7 @@ export default function Hero() {
           </Button>
           <Button 
             variant="outline"
-            className="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white hover:text-dark-brown transition-all duration-300 font-semibold text-lg"
+            className="bg-white text-dark-brown border-2 border-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-dark-brown hover:text-white transition-all duration-300"
             onClick={() => scrollToSection("#menu")}
           >
             View Menu
