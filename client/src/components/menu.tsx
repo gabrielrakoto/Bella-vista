@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { MenuItem, MenuCategory } from "@shared/schema";
+import type { MenuItem } from "@shared/schema";
 
 const menuCategories = [
   { id: "appetizers", name: "Appetizers" },
@@ -19,21 +19,9 @@ const mockMenuItems: MenuItem[] = [
     name: "Truffle Arancini",
     description: "Crispy risotto balls filled with wild mushrooms and black truffle, served with saffron aioli",
     price: "18.00",
-    imageUrl: "https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80",
     isAvailable: true,
     displayOrder: 1,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: "2",
-    categoryId: "appetizers",
-    name: "Fresh Oysters",
-    description: "Half dozen fresh oysters served with classic mignonette and lemon",
-    price: "24.00",
-    imageUrl: "https://pixabay.com/get/gafc27cc0e8d8522ccce53f60280801490f88b5257e1d4b5d50d828ca22126091f2883a48ac2551a5f2fd850322f5ba565815e1d66818d03e7721624fe8cd2123_1280.jpg",
-    isAvailable: true,
-    displayOrder: 2,
     createdAt: new Date(),
     updatedAt: new Date(),
   },
@@ -43,7 +31,7 @@ const mockMenuItems: MenuItem[] = [
     name: "Grilled Beef Tenderloin",
     description: "8oz premium beef tenderloin with roasted seasonal vegetables and red wine reduction",
     price: "45.00",
-    imageUrl: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
     isAvailable: true,
     displayOrder: 1,
     createdAt: new Date(),
@@ -55,7 +43,7 @@ const mockMenuItems: MenuItem[] = [
     name: "Chocolate Soufflé",
     description: "Warm dark chocolate soufflé with vanilla bean ice cream and gold leaf",
     price: "16.00",
-    imageUrl: "https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     isAvailable: true,
     displayOrder: 1,
     createdAt: new Date(),
@@ -66,7 +54,6 @@ const mockMenuItems: MenuItem[] = [
 export default function Menu() {
   const [activeCategory, setActiveCategory] = useState("appetizers");
 
-  // In a real app, this would fetch from the API
   const { data: menuItems = mockMenuItems, isLoading } = useQuery({
     queryKey: ["/api/menu/items"],
     enabled: false, // Disable for now since we're using mock data
@@ -102,7 +89,6 @@ export default function Menu() {
         {/* Menu Items */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {isLoading ? (
-            // Loading skeletons
             Array.from({ length: 6 }).map((_, index) => (
               <Card key={index} className="overflow-hidden">
                 <Skeleton className="w-full h-64" />
