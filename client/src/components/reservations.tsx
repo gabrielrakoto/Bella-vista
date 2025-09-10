@@ -46,18 +46,54 @@ export default function Reservations() {
 
   const onSubmit = async (data: ReservationFormData) => {
     setIsSubmitting(true);
-    
+
     try {
-      // Simulate form submission (replace with actual Formspree or email service)
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Reservation Submitted",
-        description: "Your reservation request has been submitted successfully! We'll contact you soon to confirm.",
+      // Préparer les données pour Formspree
+      const formData = new FormData();
+
+      // Ajouter tous les champs du formulaire
+      formData.append('firstName', data.firstName);
+      formData.append('lastName', data.lastName);
+      formData.append('email', data.email);
+      formData.append('phone', data.phone);
+      formData.append('date', data.date.toLocaleDateString('fr-FR'));
+      formData.append('time', data.time);
+      formData.append('guests', data.guests.toString());
+
+      // Champs optionnels
+      if (data.occasion) {
+        formData.append('occasion', data.occasion);
+      }
+      if (data.specialRequests) {
+        formData.append('specialRequests', data.specialRequests);
+      }
+
+      // Ajouter un sujet pour l'email
+      formData.append('_subject', `Nouvelle réservation - ${data.firstName} ${data.lastName}`);
+
+      // Envoyer à Formspree
+      const response = await fetch('https://formspree.io/f/xeolnkwo', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
       });
-      setIsSubmitted(true);
-      form.reset();
+
+      if (response.ok) {
+        toast({
+          title: "Reservation Submitted",
+          description: "Your reservation request has been submitted successfully! We'll contact you soon to confirm.",
+        });
+        setIsSubmitted(true);
+        form.reset();
+      } else {
+        // Gérer les erreurs de Formspree
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to submit form');
+      }
     } catch (error) {
+      console.error('Form submission error:', error);
       toast({
         title: "Error", 
         description: "Failed to submit reservation. Please try again.",
